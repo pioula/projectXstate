@@ -134,6 +134,7 @@ export const incidentCreatorMachine = createMachine(
                 target: '.finished',
                 actions: sendParent('CANCEL'),
             },
+            //eventy wysyłane przez bootstrapa w momencie klikania tabów
             general: '.general',
             location: '.location'
         }
