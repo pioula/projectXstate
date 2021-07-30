@@ -19,11 +19,11 @@ export const incidentsMachine = createMachine(
                 on: {
                     CREATE: {
                         target: 'creatingIncident',
+                        actions: [send('CREATE_NEW_INCIDENT', { to: (context) => context.incidentCreatorM })] 
                     }
                 }
             }, 
             creatingIncident: {
-                entry: send('CREATE_NEW_INCIDENT', { to: (context) => context.incidentCreatorM }),
                 on: {
                     CANCEL: {
                         target: 'incidentsList',

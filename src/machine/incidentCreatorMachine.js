@@ -31,20 +31,28 @@ export const incidentCreatorMachine = createMachine(
             idle: {
                 on: {
                     CREATE_NEW_INCIDENT: {
-                        target: 'general',
-                        actions: 'createNewIncident'
+                        target: 'form',
+                        actions: ['createNewIncident']
                     }
                 }
             },
-            general: {
-                on: {
-                    NEXT: 'location'
-                }
-            },
-            location: {
-                on: {
-                    BACK: {
-                        target: 'general',
+            form: {
+                initial: 'general',
+                states: {
+                    hist: {
+                        type: 'history',
+                        history: 'shallow',
+                        target: 'general'
+                    },
+                    general: {
+                        on: {
+                            NEXT: 'location'
+                        }
+                    },
+                    location: {
+                        on: {
+                            BACK: 'general'
+                        }
                     }
                 }
             },
@@ -111,7 +119,7 @@ export const incidentCreatorMachine = createMachine(
                         })),
                     },
                     onError: {
-                        target: 'general', 
+                        target: 'form.hist', 
                         actions: [
                             () => alert("Some required fields are empty!"),
                             send('TO_FORM', { to: (context) => context.locationM }),
@@ -134,9 +142,8 @@ export const incidentCreatorMachine = createMachine(
                 target: '.finished',
                 actions: sendParent('CANCEL'),
             },
-            //eventy wysyłane przez bootstrapa w momencie klikania tabów
-            general: '.general',
-            location: '.location'
+            general: 'form.general',
+            location: 'form.location'
         }
     },
     {

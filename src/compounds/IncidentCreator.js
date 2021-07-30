@@ -16,7 +16,7 @@ export function IncidentCreator({ incidentCreator }) {
             <div></div>
         );
     }
-
+    
     return (
         <Container>
             <Row>
@@ -40,7 +40,7 @@ export function IncidentCreator({ incidentCreator }) {
                 <Col>
                     <Tabs
                         id="incident-tabs"
-                        activeKey={incidentCreator.state.value}
+                        activeKey={ incidentCreator.state.value.form }
                         onSelect={(k) => incidentCreator.send(k)}
                         className="mb-3"
                     >
@@ -59,13 +59,13 @@ export function IncidentCreator({ incidentCreator }) {
                 <Col>
                     <Button 
                         variant="primary"
-                        hidden={ incidentCreator.state.matches('location') }
+                        hidden={ incidentCreator.state.matches({ form: 'location' }) }
                         onClick={ () => incidentCreator.send('NEXT') }>
                         Next
                     </Button>
                     <Button
                         variant="light"
-                        hidden={ incidentCreator.state.matches('general') }
+                        hidden={ incidentCreator.state.matches({ form: 'general'}) }
                         onClick={ () => incidentCreator.send('BACK') }>
                         Back
                     </Button>

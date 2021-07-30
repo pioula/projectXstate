@@ -39,10 +39,10 @@ export const locationMachine = createMachine(
                 }
             },
             saved: {
-                entry: sendParent((context, _) => ({
+                entry: [sendParent((context, _) => ({
                     value: context,
                     type: 'LOCATION_UPDATE'
-                })),
+                }))],
                 on: {
                     TO_FORM: {
                         target: 'form',
